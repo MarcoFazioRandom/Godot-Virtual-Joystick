@@ -21,6 +21,8 @@ enum Joystick_mode {
 	DYNAMIC, ## Every time the joystick area is pressed, the joystick position is set on the touched position.
 	FOLLOWING ## When the finger moves outside the joystick area, the joystick will follow it.
 }
+## For Dynamic Mode define far touch offset can be
+@export_range(0, 500, 1) var dynamic_radius : float = 85
 
 ## If the joystick stays in the same position or appears on the touched position when touch is started
 @export var joystick_mode := Joystick_mode.FIXED
@@ -59,6 +61,7 @@ var _touch_index : int = -1
 
 @onready var _base_default_position : Vector2 = _base.position
 @onready var _tip_default_position : Vector2 = _tip.position
+@onready var _center : Vector2 = _base.global_position + _base.size/2
 
 @onready var _default_color : Color = _tip.modulate
 
@@ -106,9 +109,11 @@ func _move_tip(new_position: Vector2) -> void:
 	_tip.global_position = new_position - _tip.pivot_offset * _base.get_global_transform_with_canvas().get_scale()
 
 func _is_point_inside_joystick_area(point: Vector2) -> bool:
-	var x: bool = point.x >= global_position.x and point.x <= global_position.x + (size.x * get_global_transform_with_canvas().get_scale().x)
-	var y: bool = point.y >= global_position.y and point.y <= global_position.y + (size.y * get_global_transform_with_canvas().get_scale().y)
-	return x and y
+	var pointdiff :Vector2= point-_center
+	return pointdiff.length() < dynamic_radius
+	#var x: bool = point.x >= global_position.x and point.x <= global_position.x + (size.x * get_global_transform_with_canvas().get_scale().x)
+	#var y: bool = point.y >= global_position.y and point.y <= global_position.y + (size.y * get_global_transform_with_canvas().get_scale().y)
+	#return x and y
 
 func _get_base_radius() -> Vector2:
 	return _base.size * _base.get_global_transform_with_canvas().get_scale() / 2
