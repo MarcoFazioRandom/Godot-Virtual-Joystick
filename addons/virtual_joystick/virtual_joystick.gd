@@ -66,6 +66,8 @@ var _touch_index : int = -1
 
 func _ready() -> void:
 	call_deferred("_set_default_position")
+	get_tree().get_root().size_changed.connect(_set_default_position)
+	
 	if ProjectSettings.get_setting("input_devices/pointing/emulate_mouse_from_touch"):
 		printerr("The Project Setting 'emulate_mouse_from_touch' should be set to False")
 	if not ProjectSettings.get_setting("input_devices/pointing/emulate_touch_from_mouse"):
