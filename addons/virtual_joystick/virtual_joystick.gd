@@ -41,7 +41,7 @@ enum Visibility_mode {
 @export var action_right := "ui_right"
 @export var action_up := "ui_up"
 @export var action_down := "ui_down"
-
+@export var action_click := "ui_press"
 # PUBLIC VARIABLES
 
 ## If the joystick is receiving inputs.
@@ -65,6 +65,7 @@ var _touch_index : int = -1
 # FUNCTIONS
 
 func _ready() -> void:
+	call_deferred("_set_default_position")
 	if ProjectSettings.get_setting("input_devices/pointing/emulate_mouse_from_touch"):
 		printerr("The Project Setting 'emulate_mouse_from_touch' should be set to False")
 	if not ProjectSettings.get_setting("input_devices/pointing/emulate_touch_from_mouse"):
@@ -76,6 +77,10 @@ func _ready() -> void:
 	if visibility_mode == Visibility_mode.WHEN_TOUCHED:
 		hide()
 
+func _set_default_position():
+	_base_default_position = _base.position
+	pass
+
 func _input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
 		if event.pressed:
@@ -86,10 +91,12 @@ func _input(event: InputEvent) -> void:
 					if visibility_mode == Visibility_mode.WHEN_TOUCHED:
 						show()
 					_touch_index = event.index
+					Input.action_press(action_click)
 					_tip.modulate = pressed_color
 					_update_joystick(event.position)
 					get_viewport().set_input_as_handled()
 		elif event.index == _touch_index:
+			Input.action_release(action_click)
 			_reset()
 			if visibility_mode == Visibility_mode.WHEN_TOUCHED:
 				hide()
