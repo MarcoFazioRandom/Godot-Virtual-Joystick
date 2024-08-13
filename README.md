@@ -18,7 +18,7 @@ A simple yet powerful virtual joystick for touchscreens in Godot, packed with us
 ## 📸 Preview
 
 <p align="center">
-  <img src="addons/virtual_joystick/previews/ShowcasePreview.png" width="45%">
+  <img src="addons/virtual_joystick/previews/ShowcasePreview.png" width="65%">
 </p>
 
 ## 🚀 Quick Start
