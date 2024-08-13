@@ -1,6 +1,6 @@
 # Godot Virtual Joystick
 
-<img src="addons/virtual_joystick/previews/CoverPreview.svg" width="80%">
+<img src="addons/virtual_joystick/previews/CoverPreview.svg" width="100%">
 
 A simple yet powerful virtual joystick for touchscreens in Godot, packed with useful options to enhance your game's mobile experience.
 
