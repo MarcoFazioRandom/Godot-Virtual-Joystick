@@ -76,6 +76,8 @@ func _ready() -> void:
 	if visibility_mode == Visibility_mode.WHEN_TOUCHED:
 		hide()
 
+	_reset()
+
 func _input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
 		if event.pressed:
