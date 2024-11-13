@@ -71,6 +71,8 @@ Ensure these settings in Project -> Project Settings -> General -> Input Devices
 - "Emulate Touch from Mouse" : ON
 - "Emulate Mouse from Touch" : OFF
 
+If other buttons don't work with this configuration, use TouchScreenButton instead of TextureButton.
+
 ### Input.get_vector() Not Working?
 
 ⚠️ **Fixed in Godot 4.2.1**
