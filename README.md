@@ -85,6 +85,9 @@ input_vector.x = Input.get_axis("ui_left", "ui_right")
 input_vector.y = Input.get_axis("ui_up", "ui_down")
 ```
 
+### Freeze/crash on Android editor
+As mentioned in the [Docs](https://docs.godotengine.org/en/stable/tutorials/editor/using_the_android_editor.html), the Android editor is still unstable.
+
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to submit issues or pull requests on the [GitHub repository](https://github.com/MarcoFazioRandom/Virtual-Joystick-Godot).
