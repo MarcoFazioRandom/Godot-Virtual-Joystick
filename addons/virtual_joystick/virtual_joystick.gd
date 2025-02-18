@@ -102,7 +102,7 @@ func _input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 
 func _move_base(new_position: Vector2) -> void:
-	_base.global_position = new_position - _base.pivot_offset * get_global_transform_with_canvas().get_scale()
+	_base.global_position = new_position - _base.pivot_offset * _base.get_global_transform_with_canvas().get_scale()
 
 func _move_tip(new_position: Vector2) -> void:
 	_tip.global_position = new_position - _tip.pivot_offset * _base.get_global_transform_with_canvas().get_scale()
@@ -125,19 +125,21 @@ func _is_point_inside_base(point: Vector2) -> bool:
 		return false
 
 func _update_joystick(touch_position: Vector2) -> void:
+	var deadzone = deadzone_size * _base.get_global_transform_with_canvas().get_scale().x
+	var clampzone = clampzone_size * _base.get_global_transform_with_canvas().get_scale().x
 	var _base_radius = _get_base_radius()
 	var center : Vector2 = _base.global_position + _base_radius
 	var vector : Vector2 = touch_position - center
-	vector = vector.limit_length(clampzone_size)
+	vector = vector.limit_length(clampzone)
 	
-	if joystick_mode == Joystick_mode.FOLLOWING and touch_position.distance_to(center) > clampzone_size:
+	if joystick_mode == Joystick_mode.FOLLOWING and touch_position.distance_to(center) > clampzone:
 		_move_base(touch_position - vector)
 	
 	_move_tip(center + vector)
 	
-	if vector.length_squared() > deadzone_size * deadzone_size:
+	if vector.length_squared() > deadzone * deadzone:
 		is_pressed = true
-		output = (vector - (vector.normalized() * deadzone_size)) / (clampzone_size - deadzone_size)
+		output = (vector - (vector.normalized() * deadzone)) / (clampzone - deadzone)
 	else:
 		is_pressed = false
 		output = Vector2.ZERO
